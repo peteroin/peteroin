@@ -1,5 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1274" height="833.6" viewBox="0 0 1274 833.6" role="img" aria-label="ASCII GitHub profile card for peteroin">
-  <rect x="0.5" y="0.5" width="1273" height="832.6" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+  <defs>
+    <style>
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes blink  { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+      @keyframes pulse  { 0%, 100% { opacity: .6; } 50% { opacity: 1; } }
+
+      /* BIT-FLIP JITTER: hard stepped snaps, runs concurrently with the reveal */
+      @keyframes jitter {
+        0%   { transform: translate(0, 0); }
+        10%  { transform: translate(-2px, 1px); }
+        20%  { transform: translate(3px, -1px); }
+        30%  { transform: translate(-1px, -2px); }
+        40%  { transform: translate(2px, 2px); }
+        50%  { transform: translate(-3px, 0); }
+        60%  { transform: translate(1px, -1px); }
+        70%  { transform: translate(2px, 1px); }
+        80%  { transform: translate(-2px, -1px); }
+        90%  { transform: translate(1px, 2px); }
+        100% { transform: translate(0, 0); }
+      }
+
+      /* SCANLINE sweep during boot */
+      @keyframes sweep {
+        0%   { transform: translateY(-20px); opacity: 0; }
+        10%  { opacity: .5; }
+        90%  { opacity: .5; }
+        100% { transform: translateY(853px); opacity: 0; }
+      }
+
+      .bg       { opacity: 0; animation: fadeIn .55s ease-out forwards; }
+      .info text{ opacity: 0; animation: fadeUp .42s ease-out forwards; }
+
+      /* art group: bit-flip glitch filter + stepped jitter */
+      .art {
+        filter: url(#bitflip);
+        animation: jitter .12s steps(1) 10;
+        transform-origin: 50% 50%;
+      }
+      .art text { opacity: 0; animation: fadeUp .32s ease-out forwards; }
+
+      .spark    { animation: pulse 2.4s ease-in-out 2.8s infinite; }
+      .cursor   { opacity: 0; animation: blink 1s steps(1) 2.4s infinite; }
+      .scanline { opacity: 0; animation: sweep 1.15s linear .05s 1 both; }
+
+      /* art: line-by-line reveal (unchanged) */
+      .art text:nth-child(1){animation-delay:0s}.art text:nth-child(2){animation-delay:.012s}.art text:nth-child(3){animation-delay:.024s}.art text:nth-child(4){animation-delay:.036s}.art text:nth-child(5){animation-delay:.048s}
+      .art text:nth-child(6){animation-delay:.06s}.art text:nth-child(7){animation-delay:.072s}.art text:nth-child(8){animation-delay:.084s}.art text:nth-child(9){animation-delay:.096s}.art text:nth-child(10){animation-delay:.108s}
+      .art text:nth-child(11){animation-delay:.12s}.art text:nth-child(12){animation-delay:.132s}.art text:nth-child(13){animation-delay:.144s}.art text:nth-child(14){animation-delay:.156s}.art text:nth-child(15){animation-delay:.168s}
+      .art text:nth-child(16){animation-delay:.18s}.art text:nth-child(17){animation-delay:.192s}.art text:nth-child(18){animation-delay:.204s}.art text:nth-child(19){animation-delay:.216s}.art text:nth-child(20){animation-delay:.228s}
+      .art text:nth-child(21){animation-delay:.24s}.art text:nth-child(22){animation-delay:.252s}.art text:nth-child(23){animation-delay:.264s}.art text:nth-child(24){animation-delay:.276s}.art text:nth-child(25){animation-delay:.288s}
+      .art text:nth-child(26){animation-delay:.3s}.art text:nth-child(27){animation-delay:.312s}.art text:nth-child(28){animation-delay:.324s}.art text:nth-child(29){animation-delay:.336s}.art text:nth-child(30){animation-delay:.348s}
+      .art text:nth-child(31){animation-delay:.36s}.art text:nth-child(32){animation-delay:.372s}.art text:nth-child(33){animation-delay:.384s}.art text:nth-child(34){animation-delay:.396s}.art text:nth-child(35){animation-delay:.408s}
+      .art text:nth-child(36){animation-delay:.42s}.art text:nth-child(37){animation-delay:.432s}.art text:nth-child(38){animation-delay:.444s}.art text:nth-child(39){animation-delay:.456s}.art text:nth-child(40){animation-delay:.468s}
+      .art text:nth-child(41){animation-delay:.48s}.art text:nth-child(42){animation-delay:.492s}.art text:nth-child(43){animation-delay:.504s}.art text:nth-child(44){animation-delay:.516s}.art text:nth-child(45){animation-delay:.528s}
+      .art text:nth-child(46){animation-delay:.54s}.art text:nth-child(47){animation-delay:.552s}.art text:nth-child(48){animation-delay:.564s}.art text:nth-child(49){animation-delay:.576s}.art text:nth-child(50){animation-delay:.588s}
+      .art text:nth-child(51){animation-delay:.6s}.art text:nth-child(52){animation-delay:.612s}.art text:nth-child(53){animation-delay:.624s}.art text:nth-child(54){animation-delay:.636s}.art text:nth-child(55){animation-delay:.648s}
+      .art text:nth-child(56){animation-delay:.66s}.art text:nth-child(57){animation-delay:.672s}.art text:nth-child(58){animation-delay:.684s}.art text:nth-child(59){animation-delay:.696s}.art text:nth-child(60){animation-delay:.708s}
+      .art text:nth-child(61){animation-delay:.72s}.art text:nth-child(62){animation-delay:.732s}.art text:nth-child(63){animation-delay:.744s}.art text:nth-child(64){animation-delay:.756s}.art text:nth-child(65){animation-delay:.768s}
+      .art text:nth-child(66){animation-delay:.78s}.art text:nth-child(67){animation-delay:.792s}.art text:nth-child(68){animation-delay:.804s}.art text:nth-child(69){animation-delay:.816s}.art text:nth-child(70){animation-delay:.828s}
+      .art text:nth-child(71){animation-delay:.84s}.art text:nth-child(72){animation-delay:.852s}.art text:nth-child(73){animation-delay:.864s}.art text:nth-child(74){animation-delay:.876s}.art text:nth-child(75){animation-delay:.888s}
+      .art text:nth-child(76){animation-delay:.9s}.art text:nth-child(77){animation-delay:.912s}.art text:nth-child(78){animation-delay:.924s}.art text:nth-child(79){animation-delay:.936s}.art text:nth-child(80){animation-delay:.948s}.art text:nth-child(81){animation-delay:.96s}
+
+      /* info panel: staggered */
+      .info text:nth-child(1){animation-delay:1s}.info text:nth-child(2){animation-delay:1.09s}.info text:nth-child(3){animation-delay:1.17s}.info text:nth-child(4){animation-delay:1.26s}
+      .info text:nth-child(5){animation-delay:1.34s}.info text:nth-child(6){animation-delay:1.43s}.info text:nth-child(7){animation-delay:1.51s}.info text:nth-child(8){animation-delay:1.6s}
+      .info text:nth-child(9){animation-delay:1.68s}.info text:nth-child(10){animation-delay:1.77s}.info text:nth-child(11){animation-delay:1.85s}.info text:nth-child(12){animation-delay:1.94s}
+      .info text:nth-child(13){animation-delay:2.02s}.info text:nth-child(14){animation-delay:2.11s}.info text:nth-child(15){animation-delay:2.19s}.info text:nth-child(16){animation-delay:2.28s}
+
+      @media (prefers-reduced-motion: reduce) {
+        .bg, .art, .art text, .info text, .spark, .cursor, .scanline {
+          animation: none !important;
+          filter: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+    </style>
+
+    <!-- BIT-FLIP FILTER: turbulence + displacement that decays to zero -->
+    <filter id="bitflip" x="-8%" y="-4%" width="116%" height="108%" color-interpolation-filters="sRGB">
+      <feTurbulence id="turb" type="fractalNoise" baseFrequency="0 0.9" numOctaves="1" seed="1" result="noise">
+        <animate attributeName="seed"
+                 values="1;5;2;9;3;14;4;22;6;30;7;41"
+                 dur="1.2s" repeatCount="1" fill="freeze"/>
+        <animate attributeName="baseFrequency"
+                 values="0 0.9; 0 0.35; 0 1.4; 0 0.5; 0 1.1; 0 0.7; 0 0.9"
+                 dur="1.2s" repeatCount="1" fill="freeze"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="10"
+                         xChannelSelector="R" yChannelSelector="G">
+        <animate attributeName="scale"
+                 values="12; 8; 14; 5; 9; 3; 5; 2; 0"
+                 dur="1.2s" repeatCount="1" fill="freeze"/>
+      </feDisplacementMap>
+    </filter>
+  </defs>
+
+  <rect class="bg" x="0.5" y="0.5" width="1273" height="832.6" rx="8" fill="#ffffff" stroke="#d0d7de"/>
+
+  <!-- scanline sweep -->
+  <rect class="scanline" x="0" y="0" width="1274" height="6" fill="#2da44e" opacity="0"/>
+
+  <g class="art">
   <text x="28" y="34.6" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">               .________.                                                                                   ._---_uu_/</text>
   <text x="28" y="44.2" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">              jjjxxxxxxxxxjj_.:                                                                        _-jgooooooooooo/</text>
   <text x="28" y="53.8" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">             jjjjxxxxxxxxxjjjjjjj_.                                                              _--uoooooooooooooooooo|</text>
@@ -81,6 +184,9 @@
   <text x="28" y="783.4" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">                                    'Y-A------^---nooooooooooo@\\        /ooooooooooooo}</text>
   <text x="28" y="793" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">                                                     qoooo@o@\\            /$@o@o@oo}^`</text>
   <text x="28" y="802.6" fill="#24292f" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="8">                                                     @@@U--\                  ?-A@@@|</text>
+  </g>
+
+  <g class="info">
   <text x="688.8" y="241.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#d0d7de">─</tspan><tspan fill="#0969da"> peteroin@github </tspan><tspan fill="#d0d7de">────────────────────────────────────────</tspan></text>
   <text x="688.8" y="261.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Uptime: </tspan><tspan fill="#8c959f">......................</tspan><tspan fill="#24292f"> 3 years, 7 months, 1 day</tspan></text>
   <text x="688.8" y="281.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Location: </tspan><tspan fill="#8c959f">.......................................</tspan><tspan fill="#24292f"> India</tspan></text>
@@ -94,7 +200,10 @@
   <text x="688.8" y="481.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. PRs: </tspan><tspan fill="#8c959f">.................</tspan><tspan fill="#0550ae"> 3</tspan><tspan fill="#d0d7de"> | </tspan><tspan fill="#953800">. Issues: </tspan><tspan fill="#8c959f">..............</tspan><tspan fill="#0550ae"> 1</tspan></text>
   <text x="688.8" y="501.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Top repo: </tspan><tspan fill="#8c959f">..............................</tspan><tspan fill="#24292f"> feedaily (9 ★)</tspan></text>
   <text x="688.8" y="541.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#d0d7de">─</tspan><tspan fill="#0969da"> Last 12 Months </tspan><tspan fill="#d0d7de">─────────────────────────────────────────</tspan></text>
-  <text x="688.8" y="561.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Contributions: </tspan><tspan fill="#8c959f">......</tspan><tspan fill="#0550ae"> 94</tspan><tspan fill="#d0d7de"> | </tspan><tspan fill="#953800">. Reviews: </tspan><tspan fill="#8c959f">.............</tspan><tspan fill="#0550ae"> 0</tspan></text>
+  <text x="688.8" y="561.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Contributions: </tspan><tspan fill="#8c959f">......</tspan><tspan fill="#0550ae"> 94</tspan></text>
   <text x="688.8" y="581.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#953800">. Private: </tspan><tspan fill="#8c959f">...........................................</tspan><tspan fill="#0550ae"> 58</tspan></text>
-  <text x="688.8" y="601.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan fill="#2da44e">          ▆  ▄▂▂    █ ▂▅  ▅        ▄      ▃▄  ▆▆ ▄▆▄  </tspan></text>
+  <text x="688.8" y="601.8" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16"><tspan class="spark" fill="#2da44e">          ▆  ▄▂▂    █ ▂▅  ▅        ▄      ▃▄  ▆▆ ▄▆▄  </tspan></text>
+  </g>
+
+  <text class="cursor" x="688.8" y="625.8" fill="#2da44e" font-family="'Consolas', 'Menlo', 'DejaVu Sans Mono', monospace" xml:space="preserve" font-size="16">▊</text>
 </svg>
